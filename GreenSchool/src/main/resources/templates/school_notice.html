@@ -48,10 +48,28 @@
     <div class="nav-scroller py-1 mb-2">
       <nav class="nav d-flex justify-content-between">
         <a class="p-2 text-muted" th:href="@{/school/info}">학교소개</a>
-        <a class="p-2 text-muted" th:href="@{/school/notice}">공지사항</a>
+        <a class="p-2 text-muted" th:href="@{/notice/list}">공지사항</a>
         <a class="p-2 text-muted" th:href="@{/question/list}">학생마당</a>
       </nav>
     </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>제목</th>
+          <th>작성일시</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="notice : ${noticeList}">
+          <td>
+          	<a th:href="@{|/notice/detail/${notice.id}|}" th:text="${notice.subject}"></a>
+          </td>
+          <td th:text="${notice.createDate}"></td>
+        </tr>
+      </tbody>
+    </table>
+    <a th:href="@{/notice/create}" class="btn btn-primary">글 쓰기</a>
     </div>
 </body>
 </html>

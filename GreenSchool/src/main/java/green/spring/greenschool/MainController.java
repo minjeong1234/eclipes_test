@@ -20,10 +20,5 @@ public class MainController {
 	public String info() {
 		return "school_info";
 	}
-	
-	@RequestMapping("/school/notice") //공지사항
-	public String notice() {
-		return "school_notice";
-	}
 
 }
