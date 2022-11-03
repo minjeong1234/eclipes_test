@@ -1,8 +1,11 @@
 package green.spring.greenschool.notice;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import green.spring.greenschool.user.SiteUser;
+import green.spring.greenschool.user.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/notice")
@@ -20,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class NoticeController {
 	
 	private final NoticeService noticeService;
+	private final UserService userService;
 	
 	@RequestMapping("/list")
 	public String notice(Model model, @RequestParam(value="page", defaultValue="0") int page) {
@@ -35,17 +41,20 @@ public class NoticeController {
 		return "notice_detail";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/create")
 	public String noticeCreate(NoticeForm noticeForm) {
 		return "notice_form";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/create")
-	public String noticeCreate(@Valid NoticeForm noticeForm, BindingResult bindingResult) {
+	public String noticeCreate(@Valid NoticeForm noticeForm, BindingResult bindingResult, Principal principal) {
 		if(bindingResult.hasErrors()) {
 			return "notice_form";
 		}
-		this.noticeService.create(noticeForm.getSubject(), noticeForm.getContent());
+		SiteUser siteUser = this.userService.getUser(principal.getName());
+		this.noticeService.create(noticeForm.getSubject(), noticeForm.getContent(), siteUser);
 		return "redirect:/notice/list";
 	}
 

@@ -1,4 +1,6 @@
-<div th:fragment="formErrorsFragment" class="alert alert-danger"
+<div th:fragment="formErrorsFragment" class="alert alert-danger d-flex align-item-center"
     role="alert" th:if="${#fields.hasAnyErrors()}">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img"
+    aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"></use></svg>
     <div th:each="err : ${#fields.allErrors()}" th:text="${err}"></div>
 </div>

@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
+import green.spring.greenschool.user.SiteUser;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,5 +28,8 @@ public class Notice {
 	private String content;
 	
 	private LocalDateTime createDate;
+	
+	@ManyToOne
+	private SiteUser author;
 
 }

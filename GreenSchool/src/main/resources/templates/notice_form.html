@@ -1,26 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지 작성</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>그린고등학교</title>
+  <!-- 부트스트랩 -->
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+	
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+  <!-- 추가 스타일 -->
+	<style>
+      .bd-placeholder-img {
+		font-family: 'Do Hyeon' sans-serif;
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      a{
+		  text-decoration: none;
+	  }
+  </style>
+  <!-- 추가 스타일css -->
+  <link th:href="@{/blog.css}" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h5 class="my-3 border-bottom pb-2">공지 등록</h5>
-        <form th:action="@{/notice/create}" th:object="${noticeForm}" method="post">
-            <div th:replace="form_errors :: formErrorsFragment"></div>
-            <div class="mb-3">
-                <label for="subject" class="form-label">제목</label>
-                <input type="text" th:tield="*{subject}" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="content" class="form-label">내용</label>
-                <textarea th:field="*{content}" class="form-control" rows="10"></textarea>
-            </div>
-            <input type="submit" value="저장하기" class="btn btn-primary my-2">
-        </form>
+  <!-- 최상단 메뉴 -->
+  <div class="container">
+    <!-- 헤더 -->
+    <header class="blog-header py-3">
+      <div class="row flex-nowrap justify-content-between align-items-center">
+        <div class="col-4 pt-1">
+          <a class="link-secondary" th:href="@{|/user/signup|}">회원가입</a>
+        </div>
+        <div class="col-4 text-center">
+          <a class="blog-header-logo text-dark" th:href="@{/greenSchool}">그린고등학교</a>
+        </div>
+        <div class="col-4 d-flex justify-content-end align-items-center">
+          <a class="btn btn-sm btn-outline-secondary" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+          <a class="btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+        </div>
+      </div>
+    </header>
+    <!-- /헤더 -->
+
+    <!-- 메뉴라인 -->
+    <div class="nav-scroller py-1 mb-2">
+      <nav class="nav d-flex justify-content-between">
+        <a class="p-2 link-secondary" th:href="@{/school/info}">학교소개</a>
+        <a class="p-2 link-secondary" th:href="@{/notice/list}">공지사항</a>
+        <a class="p-2 link-secondary" th:href="@{/question/list}">학생마당</a>
+      </nav>
     </div>
+    <!-- /메뉴라인 -->
+  </div>
+  <!-- /최상단 메뉴   -->
+
+  <div class="container">
+    <h5 class="my-3 border-bottom pb-2">공지등록</h5>
+    <form th:action="@{/notice/create}" th:object="${noticeForm}" method="post">
+        <div th:replace="form_errors :: formErrorsFragment"></div>
+        <div class="mb-3">
+            <label for="subject" class="form-label">제목</label>
+            <input type="text" name="subject" id="subject" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+        </div>
+        <input type="submit" value="등록하기" class="btn btn-primary my-2">
+    </form>
+  </div>
+
+ 
+
 </body>
 </html>
